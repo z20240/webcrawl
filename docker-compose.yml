@@ -1,0 +1,65 @@
+version: "3.6"
+
+services:
+  crawl-server:
+    build: ./crawl-puppeteer
+    command: "nodemon"
+    volumes:
+      # - ./crawl-puppeteer:/app
+      - ./crawl-puppeteer/crawl:/app/crawl
+      - ./crawl-puppeteer/public:/app/public
+      - ./crawl-puppeteer/routes:/app/routes
+      - ./crawl-puppeteer/views:/app/views
+      - ./crawl-puppeteer/app.js:/app/app.js
+      - ./crawl-puppeteer/package.json:/app/package.json
+    environment:
+      PORT: 3001
+    expose:
+      - 3001
+    ports:
+      - "3001:3001"
+    # networks:
+    #   - front-tier
+    #   - back-tier
+
+#   result:
+#     build: ./result
+#     command: nodemon server.js
+#     volumes:
+#       - ./result:/app
+#     ports:
+#       - "5001:80"
+#       - "5858:5858"
+#     networks:
+#       - front-tier
+#       - back-tier
+
+#   worker:
+#     build:
+#       context: ./worker
+#     depends_on:
+#       - "redis"
+#     networks:
+#       - back-tier
+
+#   redis:
+#     image: redis:alpine
+#     container_name: redis
+#     ports: ["6379"]
+#     networks:
+#       - back-tier
+
+#   db:
+#     image: postgres:9.4
+#     container_name: db
+#     volumes:
+#       - "db-data:/var/lib/postgresql/data"
+#     networks:
+#       - back-tier
+
+# volumes:
+#   db-data:
+
+# networks:
+#   front-tier:
+#   back-tier:

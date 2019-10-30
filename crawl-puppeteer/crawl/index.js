@@ -17,7 +17,11 @@ class Crawl {
 
         try {
 
-            this.browser = await puppeteer.launch({ headless: true });
+            this.browser = await puppeteer.launch({
+                executablePath: process.env.CHROMIUM_PATH,
+                args: ['--no-sandbox'],
+                headless: true
+            });
             this.page = await this.browser.newPage();
             await this.page.goto('https://member.ruten.com.tw/user/login.htm');
 

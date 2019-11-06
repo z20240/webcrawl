@@ -5,6 +5,8 @@ node_modules
 # local env files
 .env.local
 .env.*.local
+middleware-server/.env
+crawl-puppeteer/.env
 
 # Log files
 npm-debug.log*

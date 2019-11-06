@@ -3,12 +3,12 @@ const { TimeoutError } = require('puppeteer/Errors');
 const readline = require('readline').createInterface({
     input: process.stdin,
     output: process.stdout
-  })
+});
 
 class Crawl {
     constructor() {
-        this.userId = "z20240";
-        this.userPwd = "z7895123z";
+        this.userId = 'z20240';
+        this.userPwd = 'z7895123z';
         this.browser = null;
         this.page = null;
     }
@@ -41,20 +41,26 @@ class Crawl {
     async login(userId, password) {
 
         // 輸入帳號密碼
-        await this.page.type("input#userid", userId);
-        await this.page.type("input#userpass", password);
+        await this.page.type('input#userid', userId);
+        await this.page.type('input#userpass', password);
         await this.page.tap('input#btnLogin');
 
         // if 進入認證
-        if (await this.page.url().includes("ogin_validation.php")) {
+        if (await this.page.url().includes('ogin_validation.php')) {
 
             await this.page.waitForSelector('button#btn_send_sms');
             await this.page.tap('button#btn_send_sms');
 
-            await this.page.evaluate(() => document.querySelector("input#remember_code").checked = true );
+            await this.page.evaluate(() => document.querySelector('input#remember_code').checked = true );
 
-            const token = await new Promise((resolve, reject) => readline.question(`please input the verify token you get.\n`, resolve) );
-            await this.page.type("input#totp_code", token); // 輸入驗證碼
+            const token = await new Promise((resolve, reject) => {
+
+                readline.question('please input the verify token you get.\n', resolve);
+
+                reject();
+
+            });
+            await this.page.type('input#totp_code', token); // 輸入驗證碼
 
             await this.page.evaluate(() => Array.from(document.querySelectorAll('button')).find(el => el.innerHTML === '確認').click() );
 

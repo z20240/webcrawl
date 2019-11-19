@@ -42,18 +42,27 @@ services:
 #     networks:
 #       - back-tier
 
-#   redis:
-#     image: redis:alpine
-#     container_name: redis
-#     ports: ["6379"]
+  redis:
+    image: redis:alpine
+    container_name: redis
+    # ports: ["6379"]
+    ports:
+      - "6379:6379"
 #     networks:
 #       - back-tier
 
-#   db:
-#     image: postgres:9.4
-#     container_name: db
-#     volumes:
-#       - "db-data:/var/lib/postgresql/data"
+  postgres:
+    image: postgres:9.4
+    container_name: postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: docker
+      POSTGRES_DB: db
+      PGDATA: /tmp
+    ports:
+      - "5432:5432"
+    volumes:
+      - "./db/postgresql/data:/var/lib/postgresql/data"
 #     networks:
 #       - back-tier
 

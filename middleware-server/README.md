@@ -30,7 +30,7 @@ npm run lint
 npm install --save-dev lint-staged husky
 ```
 
-Add the script below into your package.json file
+Then add the script below into your package.json file
 ```json
 {
     ...,
@@ -44,6 +44,29 @@ Add the script below into your package.json file
 }
 
 ```
+
+### Install module-alias
+```
+npm i module-alias --save
+```
+
+#### Usage
+Add your custom configuration to your package.json (in your application's root)
+```json
+// Aliases
+"_moduleAliases": {
+  "@root"      : ".", // Application's root
+  "@deep"      : "src/some/very/deep/directory/or/file",
+  "@my_module" : "lib/some-file.js",
+  "something"  : "src/foo", // Or without @. Actually, it could be any string
+}
+```
+Then add this line at the very main file of your app, before any code
+```
+require('module-alias/register')
+```
+
+
 
 #### Trouble Shooting
 

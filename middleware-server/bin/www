@@ -3,7 +3,9 @@
 /**
  * Module dependencies.
  */
-require('dotenv').config();
+
+require('module-alias/register'); // using module-alias
+require('dotenv').config(); // using dotenv
 var app = require('../app');
 var debug = require('debug')('middleware-server:server');
 var http = require('http');

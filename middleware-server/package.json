@@ -14,7 +14,7 @@
     },
     "lint-staged": {
         "*.js": [
-            "eslint --fix --no-ignore",
+            "eslint --fix",
             "git add"
         ]
     },
@@ -27,11 +27,16 @@
         "express-graphql": "^0.9.0",
         "graphql": "^14.5.8",
         "http-errors": "~1.6.2",
-        "morgan": "~1.9.0"
+        "module-alias": "^2.2.2",
+        "morgan": "~1.9.0",
+        "pg": "^7.12.1"
     },
     "devDependencies": {
         "husky": "^3.0.9",
         "jest": "^24.9.0",
         "lint-staged": "^9.4.2"
+    },
+    "_moduleAliases": {
+        "@": "./"
     }
 }

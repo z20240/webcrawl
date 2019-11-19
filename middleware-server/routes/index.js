@@ -1,9 +1,21 @@
-var express = require('express');
-var router = express.Router();
+const rootRouter = require('./root');
+const userRouter = require('./users');
+const postgresRouter = require('./postgres');
+const graphqlRouter = require('./graphql');
 
-/* GET home page. */
-router.get('/', function (req, res, next) {
-    res.render('index', { title: 'Express' });
-});
 
-module.exports = router;
+const route = {
+    '/' : rootRouter,
+    '/user' : userRouter,
+    '/postgres' : postgresRouter,
+    '/graphiql' : graphqlRouter,
+};
+
+module.exports = (app) => {
+    for (const url in route) {
+        const routerObj = route[url];
+        app.use(url, routerObj);
+    }
+
+    return;
+};

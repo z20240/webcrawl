@@ -12,4 +12,16 @@ router.get('/', async function (req, res, next) {
     }
 });
 
+
+router.post('/', async function (req, res, next) {
+    try {
+        await pool.query(
+            'INSERT INTO users (account, name, password, email) values ($1, $2, $3, $4)',
+            [req.body.account, req.body.name, req.body.password, req.body.email]
+        );
+        return res.json({status: 'success'});
+    } catch (err) {
+        return res.json({});
+    }
+});
 module.exports = router;

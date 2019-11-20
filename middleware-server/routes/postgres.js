@@ -1,4 +1,4 @@
-const { pool } = require('../postgraphSQL');
+const { pool } = require('../postgresDB');
 const { Router } = require('express');
 var router = Router();
 

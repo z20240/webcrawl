@@ -37,7 +37,7 @@ const UserType = new GraphQLObjectType({
     })
 });
 
-const user = require('../DB/user');
+const user = require('../model/user');
 
 module.exports = new GraphQLSchema({
     query: new GraphQLObjectType({
@@ -45,11 +45,32 @@ module.exports = new GraphQLSchema({
         fields: {
             users: {
                 type: GraphQLList(UserType),
-                resolve: async () => (await user.getAll()).map(user => {
-                    delete user.password;
-                    return user;
-                })
+                resolve: async () => user.getAll()
             },
+            user: {
+                type: UserType,
+                args: {
+                    id: {
+                        type: GraphQLID,
+                        description: 'user id',
+                    },
+                    account: {
+                        type: GraphQLString,
+                        description: 'user account',
+                    },
+                    name: {
+                        type: GraphQLString,
+                        description: 'user name',
+                    },
+                    email: {
+                        type: GraphQLString,
+                        description: 'user email',
+                    },
+                },
+                resolve: async (_, args) => {
+                    return user.getUser(args);
+                }
+            }
         },
     }),
 });

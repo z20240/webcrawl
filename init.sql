@@ -2,7 +2,7 @@ CREATE DATABASE datafetcher;
 
 CREATE TABLE users (
     id          SERIAL PRIMARY KEY,
-    account     VARCHAR(40) NOT NULL,
+    account     VARCHAR(40) NOT NULL UNIQUE,
     password    VARCHAR(128) NOT NULL,
     name        VARCHAR(128) NOT NULL UNIQUE,
     email       VARCHAR(128) NOT NULL UNIQUE,

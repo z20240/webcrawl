@@ -1,12 +1,14 @@
+const user = require('../../model/user');
 const {
+    GraphQLID,
     GraphQLObjectType,
     GraphQLString,
-    GraphQLID,
     GraphQLNonNull,
+    GraphQLList,
 } = require('graphql');
 
 const UserType = new GraphQLObjectType({
-    name: 'User',
+    name: 'QueryUser',
     description: '',
     fields: () => ({
         id: {
@@ -17,10 +19,6 @@ const UserType = new GraphQLObjectType({
             type: GraphQLNonNull(GraphQLString),
             description: 'user account',
         },
-        // password: {
-        //     type: GraphQLNonNull(GraphQLString),
-        //     description: 'user password',
-        // },
         name: {
             type: GraphQLNonNull(GraphQLString),
             description: 'user name',
@@ -55,34 +53,17 @@ const UserQueryParams = {
     },
 };
 
-const UserSignUpParams = {
-    account: {
-        type: GraphQLNonNull(GraphQLString),
-        description: 'user account',
+
+module.exports = {
+    users: {
+        type: GraphQLList(UserType),
+        resolve: async () => user.getAll()
     },
-    password: {
-        type: GraphQLNonNull(GraphQLString),
-        description: 'user password',
-    },
-    name: {
-        type: GraphQLNonNull(GraphQLString),
-        description: 'user name',
-    },
-    email: {
-        type: GraphQLNonNull(GraphQLString),
-        description: 'user email',
+    user: {
+        type: UserType,
+        args: UserQueryParams,
+        resolve: async (_, args) => {
+            return user.getUser(args);
+        }
     }
 };
-
-const UserSignInParams = {
-    account: {
-        type: GraphQLNonNull(GraphQLString),
-        description: 'user account',
-    },
-    password: {
-        type: GraphQLNonNull(GraphQLString),
-        description: 'user password',
-    },
-};
-
-module.exports = { UserType, UserQueryParams, UserSignUpParams, UserSignInParams };
